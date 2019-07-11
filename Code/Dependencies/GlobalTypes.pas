@@ -29,7 +29,7 @@ type
    end;
 
    TableOfPerson = array [0..MAX_CORRECT_LINES-1] of Person;
-   TableOfQualification = arrat [0..MAX_CORRECT_LINES-1] of Qualification;
+   TableOfQualification = array [0..MAX_CORRECT_LINES-1] of Qualification;
 
 Implementation
 

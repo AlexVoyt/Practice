@@ -72,11 +72,11 @@ begin
         end;
 end;
 
-function IsVisoch(y:integer):boolean;
+function IsLeapYear(y:integer):boolean;
 begin
-    IsVisoch:= false;
+    IsLeapYear:= false;
     if (y mod 400 = 0) or ((y mod 4 = 0) and (y mod 100 <> 0)) then
-    IsVisoch:= true;
+    IsLeapYear:= true;
 end;
 
 
@@ -98,9 +98,9 @@ begin
             Is_Date_Correct := false;
     2:
         begin
-        if (IsVisoch(y)) and (d > 29) then
+        if (IsLeapYear(y)) and (d > 29) then
                 Is_Date_Correct := false;
-        if (not(IsVisoch(y))) and (d > 28) then
+        if (not(IsLeapYear(y))) and (d > 28) then
                 Is_Date_Correct := false;
         end;
     end;
