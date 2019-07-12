@@ -1,8 +1,9 @@
 unit ReadInput;
 
 Interface
-uses GlobalTypes, FirstFileCheck;
-   procedure ReadInput(var date : Date);
+   uses GlobalTypes, FirstFileCheck;
+
+   procedure ReadInputDate(var date : Date);
 
 Implementation
 
@@ -13,7 +14,7 @@ Implementation
       begin
          readln(date.year);
          if (date.year > 2017) or (date.year < 2016) then
-            writeln('Year must be in range [2016..2017]');
+            writeln('Year must be in range [2016..2017], please, repeat input');
       end;
       until (date.year <= 2017) and (date.year >= 2016);
    end;
@@ -25,7 +26,7 @@ Implementation
       begin
          readln(date.month);
          if (date.month > 12) or (date.month < 1) then
-            writeln('Month must be in range [1.12]');
+            writeln('Month must be in range [1.12], please, repeat input');
       end;
       until (date.month <= 12) and (date.month >= 1);
    end;
@@ -39,7 +40,7 @@ Implementation
          repeat
             read(date.day);
             if (date.day < 1) or (date.day > 31) then
-               writeln('Day must be in range [1..31]')
+               writeln('Day must be in range [1..31], please, repeat input')
          until (date.day >= 1) and (date.day <= 31);
       end;
       4,6,9,11:
@@ -48,7 +49,7 @@ Implementation
          repeat
             read(date.day);
             if (date.day < 1) or (date.day > 30) then
-               writeln('Day must be in range [1..30]');
+               writeln('Day must be in range [1..30], please, repeat input');
          until (date.day >= 1) and (date.day <= 30);
       end;
       2:
@@ -58,7 +59,7 @@ Implementation
             repeat
                read(date.day);
                if (date.day < 1) or (date.day > 29) then
-                  writeln('Day must be in range [1..29]');
+                  writeln('Day must be in range [1..29], please, repeat input');
             until (date.day >= 1) and (date.day <= 29);
          end
          else
@@ -67,13 +68,13 @@ Implementation
             repeat
                read(date.day);
                if (date.day < 1) or (date.day > 28) then
-                  writeln('Day must be in range [1..28]');
+                  writeln('Day must be in range [1..28], please, repeat input');
             until (date.day >= 1) and (date.day <= 28);
          end;
       end;
    end;
 
-   procedure ReadInput(var date : Date);
+   procedure ReadInputDate(var date : Date);
    begin
       ReadYear(date);
       ReadMonth(date);

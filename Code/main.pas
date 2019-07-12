@@ -1,14 +1,32 @@
+{IsLeapYear in FirstFilecheck, ReadInput uses it}
 program main;
 uses GlobalTypes, FirstFileCheck, SecondFileCheck, ReadInput;
 var
-   Staff, Catalog, OutputFile : text;
+   staff, catalog, output_file : text;
    table_of_person : TableOfPerson;
    table_of_qualification : TableOfQualification;
    output_table : TableOfPerson;
-   input_data : Date;
+   input_date : Date;
    fatal_error : boolean;
 begin
 
-   ReadInput(input_data);
+   assign(staff, 'Staff.txt');
+   assign(catalog, 'Catalog.txt');
+   assign(output_file, 'Output.txt');
+   reset(staff);
+   reset(catalog);
+   rewrite(output_file);
 
-end;
+   ReadInputDate(input_date);
+   writeln();
+   writeln(input_date.year);
+   writeln(input_date.month);
+   writeln(input_date.day);
+
+
+   if SeekEOF(Staff) then
+   begin
+      writeln('File Staff is empty');
+   end;
+
+end.
