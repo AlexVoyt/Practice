@@ -79,17 +79,20 @@ Implementation
 
    {========================== Section for error messages ============================}
 
-   procedure PrintNameError(line_counting : integer; s : string);
+   procedure PrintError(error : ErrorTypes, line_counting : integer; s : string);
    begin
-      writeln('(', line_cointing, ') ERROR: name ', s, 'must consist of surname,
-               that starts with with capital letter, followed by small latin
-               and initials, that are capital lati letters, separated by dots, for example: Surname.S.S');
-   end;
+      case error of
+         NAME:
+            writeln('(', line_cointing, ') ERROR: name ', s, 'must consist of surname,
+                     that starts with with capital letter, followed by small latin
+                     and initials, that are capital lati letters, separated by dots, for example: Surname.S.S');
 
+         GENDER:
+            writeln('(', line_cointing, ') ERROR: gender ', s, 'must be either F or M');
 
-   procedure PrintGenderError(line_counting : integer; s : string);
-   begin
-      writeln('(', line_cointing, ') ERROR: gender ', s, 'must be either F or M');
+         PROFESSION:
+            writeln('(', line_cointing, ') ERROR: profession ', s, 'must start with capital letter
+                     and other symbols must be only small altin letters');
    end;
 
 
@@ -145,7 +148,7 @@ Implementation
          i := i + 1;
       end;
       if FSM_Name = false then
-         PrintNameError(line_counting, s);
+         PrintError(NAME, line_counting, s);
    end;
 
 
@@ -175,7 +178,7 @@ Implementation
          i := i + 1;
       end;
       if (FSM_Gender = false) then
-         PrintGenderError(line_counting, s);
+         PrintError(GENDER, line_counting, s);
    end;
 
 
@@ -208,8 +211,48 @@ Implementation
          i := i + 1;
       end;
       if (FSM_Profession = false) then
-         Print_Error('Profession', line_counting);
+         PrintError(PROFESSION, line_counting, s);
    end;
+
+
+   function Check_Date (date, param : string; line_counting : integer; var output_date : Date) : boolean;
+   var
+      d, m, y, error : integer;
+      ds, ms, ys : string;
+   begin
+      Check_Date := true;
+      if length(date) <> 10 then
+         Check_Date := false;
+      if (date[3] <> '/') or (date[6] <> '/') then
+         Check_Date := false;
+
+      if Check_Date = true then
+      begin
+         ds := copy(date, 1, 2);
+         ms := copy(date, 4, 2);
+         ys := copy(date, 7, 4);
+         val(ds, d, error);
+         if error > 0 then
+               Check_Date := false;
+         val(ms, m, error);
+         if error > 0 then
+               Check_Date := false;
+         val(ys, y, error);
+         if error > 0 then
+               Check_Date := false;
+      end;
+
+      if Check_Date = true then
+         Check_Date := Is_Date_Correct(d, m, y);
+
+      if Check_Date = false then
+         Print_Error(param, line_counting)
+      else
+         output_date := MakeDate(d, m, y);
+
+   end;
+
+
 
 
    procedure ParseFirstFile (var f1 : text; var array_of_person : TableOfPerson);
