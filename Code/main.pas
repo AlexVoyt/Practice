@@ -1,6 +1,6 @@
 {IsLeapYear in FirstFilecheck, ReadInput uses it}
 program main;
-uses GlobalTypes, FirstFileCheck, SecondFileCheck, ReadInput;
+uses GlobalTypes, ReadInput, FirstFileCheck, SecondFileCheck, CorrectnessChecking;
 var
    staff, catalog, output_file : text;
    table_of_person : TableOfPerson;
@@ -17,16 +17,23 @@ begin
    reset(catalog);
    rewrite(output_file);
 
-   ReadInputDate(input_date);
+   {ReadInputDate(input_date);}
    writeln();
-   writeln(input_date.year);
-   writeln(input_date.month);
-   writeln(input_date.day);
 
+   if SeekEOF(catalog) then
+   begin
+      writeln('File Catalog is empty');
+      fatal_error := true;
+   end else
+      ParseCatalog (catalog, table_of_qualification, fatal_error);
 
-   if SeekEOF(Staff) then
+   if SeekEOF(staff) then
    begin
       writeln('File Staff is empty');
+      fatal_error := true;
    end;
+   if fatal_error = false then
+      ParseStaff (staff, table_of_person, fatal_error);
+
 
 end.

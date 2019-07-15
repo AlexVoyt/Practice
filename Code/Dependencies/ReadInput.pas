@@ -1,7 +1,7 @@
 unit ReadInput;
 
 Interface
-   uses GlobalTypes, FirstFileCheck;
+   uses GlobalTypes, CorrectnessChecking;
 
    procedure ReadInputDate(var date : Date);
 
