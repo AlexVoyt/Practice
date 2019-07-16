@@ -2,6 +2,9 @@
 program main;
 uses GlobalTypes, ReadInput, FirstFileCheck, SecondFileCheck, CorrectnessChecking;
 var
+
+   i : word;
+
    staff, catalog, output_file : text;
    table_of_person : TableOfPerson;
    table_of_qualification : TableOfQualification;
@@ -27,13 +30,40 @@ begin
    end else
       ParseCatalog (catalog, table_of_qualification, fatal_error);
 
+   writeln('=====================');
+
    if SeekEOF(staff) then
    begin
       writeln('File Staff is empty');
       fatal_error := true;
    end;
    if fatal_error = false then
-      ParseStaff (staff, table_of_person, fatal_error);
+      ParseStaff (staff, table_of_person, fatal_error)
+   else
+      writeln('=== Fatal error occured during parsing Catalog, terminating ===');
 
+   {
+   for i := 0 to MAX_CORRECT_LINES - 1 do
+   begin
+      if table_of_person[i].name = '' then continue;
+      writeln('===========================');
+      writeln('Index - ', i);
+      writeln('Name - ', table_of_person[i].name);
+      writeln('Gender - ', table_of_person[i].gender);
+      writeln('Profession - ', table_of_person[i].profession);
+      writeln('Birth date - ', table_of_person[i].birth.day, '/', table_of_person[i].birth.month, '/', table_of_person[i].birth.year);
+      writeln('Certification date - ', table_of_person[i].certificate.day, '/', table_of_person[i].certificate.month, '/', table_of_person[i].certificate.year);
+   end;
 
+   for i := 0 to MAX_CORRECT_LINES - 90 do
+   begin
+      if table_of_qualification[i].period = 0 then continue;
+      writeln('===========================');
+      writeln('Index - ', i);
+      writeln('Period - ', table_of_qualification[i].period);
+      writeln('Profession - ', table_of_qualification[i].profession);
+   end;
+   }
+
+   {TODO: output struct, selection algo}
 end.

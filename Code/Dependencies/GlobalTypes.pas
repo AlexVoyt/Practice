@@ -32,13 +32,24 @@ type
       certificate : Date;
    end;
 
+
    Qualification = record
       period : byte;
       profession : string;
    end;
 
-   TableOfPerson = array [0..MAX_CORRECT_LINES-1] of Person;
-   TableOfQualification = array [0..MAX_CORRECT_LINES-1] of Qualification;
+
+   {Resulting information}
+   Info = record
+      name : string;
+      profession : string;
+      certificate : Date;
+   end;
+
+
+   TableOfPerson = array [0..MAX_CORRECT_LINES - 1] of Person;
+   TableOfQualification = array [0..MAX_CORRECT_LINES - 1] of Qualification;
+   InfoTable = array [0..MAX_CORRECT_LINES - 1] of Info;
 
 Implementation
 

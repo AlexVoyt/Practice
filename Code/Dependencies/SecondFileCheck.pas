@@ -54,13 +54,14 @@ Implementation
                   is_ok_period := false;
                end;
 
-               is_ok_period := TakeField(s, buf_period);
+               {We do not need in returning value here}
+               TakeField(s, buf_period);
                is_ok_profession := TakeField(s, buf_profession);
                val(buf_period, period, error);
 
                if (is_ok_period) and (is_ok_profession) then
                begin
-                  is_ok_period := FSM_Profession(buf_profession, line_counting);
+                  is_ok_profession := FSM_Profession(buf_profession, line_counting);
                   if is_ok_profession then
                   begin
                      for i := 0 to MAX_CORRECT_LINES - 1 do
@@ -70,12 +71,14 @@ Implementation
                            writeln('(', line_counting, ') FATAL: profession ', buf_profession,
                                     ' is repeating with different period');
                            fatal_error := true;
-                        end else
-                        begin
-                           array_of_qualification[line_parsed].period := period;
-                           array_of_qualification[line_parsed].profession := buf_profession;
-                           line_parsed := line_parsed + 1;
                         end;
+
+                     if fatal_error = false then
+                     begin
+                        array_of_qualification[line_parsed].period := period;
+                        array_of_qualification[line_parsed].profession := buf_profession;
+                        line_parsed := line_parsed + 1;
+                     end;
                   end;
                end else
                   writeln('(', line_counting, ') ERROR: not enought attributes, 2 required');
