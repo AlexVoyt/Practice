@@ -46,11 +46,7 @@ Implementation
          is_ok_birth := TakeField(s, buf_birth_string);
          is_ok_certificate := TakeField(s, buf_certificate_string);
 
-         if (is_ok_name) and
-               (is_ok_gender) and
-               (is_ok_profession) and
-               (is_ok_birth) and
-               (is_ok_certificate) then
+         if (is_ok_certificate) then
          begin
                is_ok_name := FSM_Name(buf_name, line_counting);
                is_ok_gender := FSM_Gender(buf_gender, line_counting);
