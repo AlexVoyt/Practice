@@ -27,6 +27,7 @@ Implementation
       while array_of_person[i].name <> '' do
       begin
          is_period_exist := false;
+         j := 0;
          while (j < MAX_CORRECT_LINES) and (is_period_exist = false) do
          begin
             if (array_of_person[i].profession = array_of_qualification[j].profession) then
