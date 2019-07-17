@@ -11,9 +11,9 @@ type
 
 
    Date = record
-      day : byte;
-      month : byte;
-      year : word;
+      day : shortint;
+      month : shortint;
+      year : smallint;
    end;
 
    Person = record
