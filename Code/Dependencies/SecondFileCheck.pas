@@ -94,8 +94,7 @@ Implementation
                         line_parsed := line_parsed + 1;
                      end;
                   end;
-               end else
-                  writeln('(', line_counting, ') ERROR: not enought attributes, 2 required');
+               end;
             end;
          end else
             writeln('(', line_counting, ') ERROR: not enought attributes, 2 required');
@@ -106,7 +105,7 @@ Implementation
          writeln('File Catalog has more than ', MAX_CORRECT_LINES, ' correct lines, data loose is possible')
       else if line_parsed = 0 then
       begin
-         writeln('File Staff has no correct information');
+         writeln('File Catalog has no correct information');
          fatal_error := true;
       end;
 

@@ -22,7 +22,6 @@ Implementation
       i, j, non_passed  : byte;
    begin
       i := 0;
-      j := 0;
       non_passed := 0;
       while array_of_person[i].name <> '' do
       begin

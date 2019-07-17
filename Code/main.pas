@@ -3,7 +3,6 @@ uses GlobalTypes, ReadInput, FirstFileCheck, SecondFileCheck,
      Selection, CorrectnessChecking;
 var
    staff, catalog, output_file : text;
-   i : word;
    table_of_person : TableOfPerson;
    table_of_qualification : TableOfQualification;
    output_table : InfoTable;
@@ -44,8 +43,11 @@ begin
       end else
       begin
          writeln('==========Checking file Catalog==========');
-         ParseCatalog (catalog, table_of_qualification, fatal_error);
+         ParseCatalog(catalog, table_of_qualification, fatal_error);
+         if fatal_error = true then
+            writeln('=== Fatal error occured during parsing Catalog, terminating ===');
       end;
+
 
 
       if SeekEOF(staff) then
@@ -57,9 +59,7 @@ begin
       begin
          writeln('==========Checking file Staff==========');
          ParseStaff (staff, table_of_person, fatal_error);
-      end
-      else
-         writeln('=== Fatal error occured during parsing Catalog, terminating ===');
+      end;
 
       if fatal_error = false then
       begin
@@ -86,6 +86,7 @@ begin
          writeln('Certification date - ', table_of_person[i].certificate.day, '/', table_of_person[i].certificate.month, '/', table_of_person[i].certificate.year);
       end;
       }
+      {
       for i := 0 to MAX_CORRECT_LINES - 1 do
       begin
          if table_of_qualification[i].period = 0 then continue;
@@ -94,7 +95,7 @@ begin
          writeln('Period - ', table_of_qualification[i].period);
          writeln('Profession - ', table_of_qualification[i].profession);
       end;
-
+      }
       {
       for i := 0 to MAX_CORRECT_LINES - 1 do
       begin
