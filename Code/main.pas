@@ -3,6 +3,7 @@ uses GlobalTypes, ReadInput, FirstFileCheck, SecondFileCheck,
      Selection, CorrectnessChecking;
 var
    staff, catalog, output_file : text;
+   i : word;
    table_of_person : TableOfPerson;
    table_of_qualification : TableOfQualification;
    output_table : InfoTable;
@@ -84,7 +85,7 @@ begin
          writeln('Birth date - ', table_of_person[i].birth.day, '/', table_of_person[i].birth.month, '/', table_of_person[i].birth.year);
          writeln('Certification date - ', table_of_person[i].certificate.day, '/', table_of_person[i].certificate.month, '/', table_of_person[i].certificate.year);
       end;
-
+      }
       for i := 0 to MAX_CORRECT_LINES - 1 do
       begin
          if table_of_qualification[i].period = 0 then continue;
@@ -93,7 +94,7 @@ begin
          writeln('Period - ', table_of_qualification[i].period);
          writeln('Profession - ', table_of_qualification[i].profession);
       end;
-      }
+
       {
       for i := 0 to MAX_CORRECT_LINES - 1 do
       begin

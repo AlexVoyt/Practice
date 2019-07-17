@@ -25,7 +25,9 @@ Implementation
       line_counting := 1;
       line_parsed := 0;
 
-      while (not EOF(f1)) and (line_parsed <= MAX_CORRECT_LINES - 1) do
+      {We do not add element with index MAX_CORRECT_LINES, made for checking
+      if file has more than 100 correct lines}
+      while (not EOF(f1)) and (line_parsed <= MAX_CORRECT_LINES) do
       begin
          readln(f1, s);
          is_ok_name := true;
@@ -63,11 +65,14 @@ Implementation
                   (is_ok_profession) and
                   (is_ok_compare) then
                begin
-                  array_of_person[line_parsed].name := buf_name;
-                  array_of_person[line_parsed].gender := buf_gender[1]; {type casting}
-                  array_of_person[line_parsed].profession := buf_profession;
-                  array_of_person[line_parsed].birth := buf_birth_date;
-                  array_of_person[line_parsed].certificate := buf_certificate_date;
+                  if line_parsed <> MAX_CORRECT_LINES then
+                  begin
+                     array_of_person[line_parsed].name := buf_name;
+                     array_of_person[line_parsed].gender := buf_gender[1]; {type casting}
+                     array_of_person[line_parsed].profession := buf_profession;
+                     array_of_person[line_parsed].birth := buf_birth_date;
+                     array_of_person[line_parsed].certificate := buf_certificate_date;
+                  end;
                   line_parsed := line_parsed + 1;
                   if length(s) <> 0 then
                      writeln('(', line_counting, ') WARNING: line is correct, ',
@@ -77,8 +82,8 @@ Implementation
                writeln('(', line_counting, ') ERROR: not enough fields in line  (5 required)');
       line_counting := line_counting + 1;
       end;
-      if line_parsed = MAX_CORRECT_LINES then
-         writeln('File Staff has ', MAX_CORRECT_LINES, ' correct lines, data loose is possible')
+      if line_parsed = MAX_CORRECT_LINES + 1 then
+         writeln('File Staff has more than ', MAX_CORRECT_LINES, ' correct lines, data loose is possible')
       else if line_parsed = 0 then
       begin
          writeln('File Staff has no correct information');

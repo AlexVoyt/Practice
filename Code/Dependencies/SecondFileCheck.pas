@@ -17,16 +17,19 @@ Implementation
       line_counting : word;
       line_parsed, i, period, error : byte;
       buf_period, buf_profession : string;
-      is_ok_period, is_ok_profession, is_ok_structure : boolean;
+      is_ok_period, is_ok_profession, is_ok_structure, is_duplicate : boolean;
    begin
       line_counting := 1;
       line_parsed := 0;
 
-      while (not EOF(f1)) and (line_parsed <= MAX_CORRECT_LINES - 1) do
+      {We do not add element with index MAX_CORRECT_LINES, made for checking
+      if file has more than 100 correct lines}
+      while (not EOF(f1)) and (line_parsed <= MAX_CORRECT_LINES) do
       begin
          is_ok_structure := true;
          is_ok_profession := true;
          is_ok_period := true;
+         is_duplicate := false;
          buf_period := '';
          buf_profession := '';
          readln(f1, s);
@@ -71,12 +74,23 @@ Implementation
                            writeln('(', line_counting, ') FATAL: profession ', buf_profession,
                                     ' is repeating with different period');
                            fatal_error := true;
+                        end
+                        else if (buf_profession = array_of_qualification[i].profession) and
+                                (period = array_of_qualification[i].period) then
+                        begin
+                           writeln('(', line_counting, ') WARNING: profession ', buf_profession,
+                                    ' is repeating with same period');
+                           is_duplicate := true;
                         end;
 
-                     if fatal_error = false then
+
+                     if (fatal_error = false) and (is_duplicate = false) then
                      begin
-                        array_of_qualification[line_parsed].period := period;
-                        array_of_qualification[line_parsed].profession := buf_profession;
+                        if line_parsed <> MAX_CORRECT_LINES then
+                        begin
+                           array_of_qualification[line_parsed].period := period;
+                           array_of_qualification[line_parsed].profession := buf_profession;
+                        end;
                         line_parsed := line_parsed + 1;
                      end;
                   end;
@@ -88,8 +102,8 @@ Implementation
          line_counting := line_counting + 1;
       end;
 
-      if line_parsed = MAX_CORRECT_LINES then
-         writeln('File Catalog has ', MAX_CORRECT_LINES, ' correct lines, data loose is possible')
+      if line_parsed = MAX_CORRECT_LINES + 1 then
+         writeln('File Catalog has more than ', MAX_CORRECT_LINES, ' correct lines, data loose is possible')
       else if line_parsed = 0 then
       begin
          writeln('File Staff has no correct information');
