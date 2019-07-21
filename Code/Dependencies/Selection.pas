@@ -20,10 +20,11 @@ Implementation
    var
       is_period_exist : boolean;
       i, j, non_passed  : byte;
+      cp, inp : Date;
    begin
       i := 0;
       non_passed := 0;
-      while array_of_person[i].name <> '' do
+      while (i < MAX_CORRECT_LINES) and (array_of_person[i].name <> '') do
       begin
          is_period_exist := false;
          j := 0;
@@ -32,19 +33,14 @@ Implementation
             if (array_of_person[i].profession = array_of_qualification[j].profession) then
             begin
                is_period_exist := true;
-               if IsLesser(array_of_person[i].certificate, input_date) then
-               begin
-                  if (DateDifference(input_date, array_of_person[i].certificate) >=
-                     array_of_qualification[j].period) then
+               cp := IncYear(array_of_person[i].certificate, array_of_qualification[j].period);
+               if IsLesser(cp, input_date) then
                   begin
                      output_table[non_passed].name := array_of_person[i].name;
                      output_table[non_passed].profession := array_of_person[i].profession;
                      output_table[non_passed].certificate := array_of_person[i].certificate;
                      non_passed := non_passed + 1;
                   end;
-               end else
-                  writeln('WARNING : certification date for person ', array_of_person[i].name,
-                          ' is bigger than the input date');
             end;
             j := j + 1;
          end;
