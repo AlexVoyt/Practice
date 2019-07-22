@@ -11,7 +11,7 @@ var
 begin
 
    {$I-}
-   assign(staff, 'Staff.txt');
+   assign(staff, 'Staff2.txt');
    reset(staff);
    if IOResult <> 0 then
    begin

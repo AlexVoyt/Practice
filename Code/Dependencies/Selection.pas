@@ -21,6 +21,7 @@ Implementation
       is_period_exist : boolean;
       i, j, non_passed  : byte;
       cp, inp : Date;
+      day, month : string;
    begin
       i := 0;
       non_passed := 0;
@@ -54,9 +55,28 @@ Implementation
       for i := 0 to MAX_CORRECT_LINES - 1 do
          if output_table[i].name <> '' then
          begin
+            {Normalizing day and month if needed}
+            if (output_table[i].certificate.day >= 1) and
+               (output_table[i].certificate.day <= 9) then
+            begin
+               str(output_table[i].certificate.day, day);
+               day := '0' + day;
+            end
+            else
+               str(output_table[i].certificate.day, day);
+
+            if (output_table[i].certificate.month >= 1) and
+               (output_table[i].certificate.month <= 9) then
+            begin
+               str(output_table[i].certificate.month, month);
+               month := '0' + month;
+            end
+            else
+               str(output_table[i].certificate.month, month);
+
             writeln(f, output_table[i].name, ' ', output_table[i].profession, ' ',
-                    output_table[i].certificate.day, '/',
-                    output_table[i].certificate.month, '/',
+                    day, '/',
+                    month, '/',
                     output_table[i].certificate.year);
          end;
    end;
